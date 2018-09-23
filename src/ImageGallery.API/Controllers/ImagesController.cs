@@ -46,7 +46,8 @@ namespace ImageGallery.API.Controllers
         {
             var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
 
-            if (_galleryRepository.IsImageOwner(id, ownerId)){
+            if (_galleryRepository.IsImageOwner(id, ownerId))
+            {
 
                 var imageFromRepo = _galleryRepository.GetImage(id);
 
@@ -58,7 +59,8 @@ namespace ImageGallery.API.Controllers
                 var imageToReturn = Mapper.Map<Model.Image>(imageFromRepo);
 
                 return Ok(imageToReturn);
-            } else
+            }
+            else
                 return StatusCode(403);
         }
 
@@ -147,6 +149,11 @@ namespace ImageGallery.API.Controllers
                 // return 422 - Unprocessable Entity when validation fails
                 return new UnprocessableEntityObjectResult(ModelState);
             }
+
+            var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
+            if (!_galleryRepository.IsImageOwner(id, ownerId))
+                return StatusCode(403);
+
 
             var imageFromRepo = _galleryRepository.GetImage(id);
             if (imageFromRepo == null)

@@ -74,7 +74,7 @@ namespace ImageGallery.Client.Controllers
                 
                 return View(editImageViewModel);
             }
-            else if (
+            else if(
                 response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
                response.StatusCode == System.Net.HttpStatusCode.Forbidden)
             {
@@ -112,7 +112,13 @@ namespace ImageGallery.Client.Controllers
             {
                 return RedirectToAction("Index");
             }
-          
+            else if (
+                response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
+               response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                return RedirectToAction("AccessDenied", "Authorization");
+            }
+
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
 
