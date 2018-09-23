@@ -16,7 +16,7 @@ namespace Main.IDP
                 new TestUser
                 {
                     SubjectId = "d860efca-22d9-47fd-8249-791ba61b07c7",
-                    Username = "Frank",
+                    Username = "coc",
                     Password = "password",
 
                     Claims = new List<Claim>
@@ -28,7 +28,7 @@ namespace Main.IDP
                 new TestUser
                 {
                     SubjectId = "b7539694-97e7-4dfe-84da-b4256e1ff5c7",
-                    Username = "Claire",
+                    Username = "xoai",
                     Password = "password",
 
                     Claims = new List<Claim>
@@ -46,13 +46,29 @@ namespace Main.IDP
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
             };
         }
 
         public static IEnumerable<Client> GetClients()
         {
-            return new List<Client>();
+            return new List<Client>() {
+                new Client{
+                     ClientName = "Image Gallary",
+                     ClientId = "imagegallaryclient",
+                     AllowedGrantTypes = new string[] { GrantType.Hybrid },
+                     RedirectUris = new List<string>{
+                         "https://localhost:44398/signin-oidc"
+                     },
+                     AllowedScopes = new List<string>{
+                         IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
+                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile
+                     },
+                     ClientSecrets = {
+                        new Secret("secret".Sha256())
+                     }
+                }
+            };
         }
 
 
