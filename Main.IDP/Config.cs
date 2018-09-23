@@ -23,6 +23,7 @@ namespace Main.IDP
                     {
                         new Claim("given_name", "Frank"),
                         new Claim("family_name", "Underwood"),
+                        new Claim("address", "11 Huge street")
                     }
                 },
                 new TestUser
@@ -35,6 +36,7 @@ namespace Main.IDP
                     {
                         new Claim("given_name", "Claire"),
                         new Claim("family_name", "Underwood"),
+                        new Claim("address", "12 Big street")
                     }
                 }
             };
@@ -47,6 +49,7 @@ namespace Main.IDP
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResources.Address()
             };
         }
 
@@ -62,7 +65,8 @@ namespace Main.IDP
                      },
                      AllowedScopes = new List<string>{
                          IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
-                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile
+                         IdentityServer4.IdentityServerConstants.StandardScopes.Profile,
+                         IdentityServer4.IdentityServerConstants.StandardScopes.Address
                      },
                      ClientSecrets = {
                         new Secret("secret".Sha256())
