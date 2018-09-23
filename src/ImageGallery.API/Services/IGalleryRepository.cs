@@ -8,6 +8,7 @@ namespace ImageGallery.API.Services
     {
         IEnumerable<Image> GetImages(string ownerId);
         Image GetImage(Guid id);
+        bool IsImageOwner(Guid id, string ownerId);
         bool ImageExists(Guid id);
         void AddImage(Image image);
         void UpdateImage(Image image);

@@ -44,16 +44,22 @@ namespace ImageGallery.API.Controllers
         [HttpGet("{id}", Name = "GetImage")]
         public IActionResult GetImage(Guid id)
         {
-            var imageFromRepo = _galleryRepository.GetImage(id);
+            var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
 
-            if (imageFromRepo == null)
-            {
-                return NotFound();
-            }
+            if (_galleryRepository.IsImageOwner(id, ownerId)){
 
-            var imageToReturn = Mapper.Map<Model.Image>(imageFromRepo);
+                var imageFromRepo = _galleryRepository.GetImage(id);
 
-            return Ok(imageToReturn);
+                if (imageFromRepo == null)
+                {
+                    return NotFound();
+                }
+
+                var imageToReturn = Mapper.Map<Model.Image>(imageFromRepo);
+
+                return Ok(imageToReturn);
+            } else
+                return StatusCode(403);
         }
 
         [HttpPost()]
