@@ -118,6 +118,10 @@ namespace ImageGallery.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteImage(Guid id)
         {
+            var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
+            if (!_galleryRepository.IsImageOwner(id, ownerId))
+                return StatusCode(403);
+
             var imageFromRepo = _galleryRepository.GetImage(id);
 
             if (imageFromRepo == null)
