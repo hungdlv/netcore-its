@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -70,7 +71,8 @@ namespace Main.IDP
                          IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
                          IdentityServer4.IdentityServerConstants.StandardScopes.Profile,
                          IdentityServer4.IdentityServerConstants.StandardScopes.Address,
-                         "roles"
+                         "roles",
+                         "imagegalleryapi"
                      },
                      ClientSecrets = {
                         new Secret("secret".Sha256())
@@ -80,6 +82,12 @@ namespace Main.IDP
                          "https://localhost:44398/signout-callback-oidc"
                      }
                 }
+            };
+        }
+
+        public static IEnumerable<ApiResource> GetApiResources() {
+            return new List<ApiResource> {
+                new ApiResource("imagegalleryapi", "Image Gallery API")
             };
         }
 
