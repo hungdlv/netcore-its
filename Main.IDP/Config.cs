@@ -67,7 +67,10 @@ namespace Main.IDP
                      ClientSecrets = {
                         new Secret("secret".Sha256())
                      },
-                     AlwaysIncludeUserClaimsInIdToken = true
+                     //AlwaysIncludeUserClaimsInIdToken = true
+                     PostLogoutRedirectUris = new List<string>{
+                         "https://localhost:44398/signout-callback-oidc"
+                     }
                 }
             };
         }
