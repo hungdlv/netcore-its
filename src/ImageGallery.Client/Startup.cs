@@ -33,6 +33,20 @@ namespace ImageGallery.Client
             // Add framework services.
             services.AddMvc();
 
+            // Add an authorization policy
+            services.AddAuthorization(authorizationOptions =>
+            {
+                authorizationOptions.AddPolicy(
+                    "CanOrderFrame",
+                    policyBuilder =>
+                    {
+                        policyBuilder.RequireAuthenticatedUser();
+                        policyBuilder.RequireClaim("country", "be");
+                        policyBuilder.RequireClaim("subscriptionlevel", "PayingUser");
+                    });
+            });
+
+
             // register an IHttpContextAccessor so we can access the current
             // HttpContext in services by injecting it
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -69,7 +83,7 @@ namespace ImageGallery.Client
                 Authority = "https://localhost:44387/",
                 RequireHttpsMetadata = true,
                 ClientId = "imagegallaryclient",
-                Scope = { "openid", "profile", "address", "roles", "imagegalleryapi" },
+                Scope = { "openid", "profile", "address", "roles", "imagegalleryapi", "subscriptionlevel", "country" },
                 ResponseType = "code id_token",
                 //CallbackPath = new PathString("...")
                 SignInScheme = "Cookies",

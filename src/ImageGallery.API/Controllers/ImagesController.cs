@@ -42,12 +42,13 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetImage")]
+        [Authorize("MustOwnImage")]
         public IActionResult GetImage(Guid id)
         {
-            var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
+            //var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
 
-            if (_galleryRepository.IsImageOwner(id, ownerId))
-            {
+            //if (_galleryRepository.IsImageOwner(id, ownerId))
+            //{
 
                 var imageFromRepo = _galleryRepository.GetImage(id);
 
@@ -59,9 +60,9 @@ namespace ImageGallery.API.Controllers
                 var imageToReturn = Mapper.Map<Model.Image>(imageFromRepo);
 
                 return Ok(imageToReturn);
-            }
-            else
-                return StatusCode(403);
+            //}
+            //else
+            //    return StatusCode(403);
         }
 
         [HttpPost()]
@@ -121,11 +122,12 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize("MustOwnImage")]
         public IActionResult DeleteImage(Guid id)
         {
-            var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
-            if (!_galleryRepository.IsImageOwner(id, ownerId))
-                return StatusCode(403);
+            //var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
+            //if (!_galleryRepository.IsImageOwner(id, ownerId))
+            //    return StatusCode(403);
 
             var imageFromRepo = _galleryRepository.GetImage(id);
 
@@ -145,6 +147,7 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize("MustOwnImage")]
         public IActionResult UpdateImage(Guid id, 
             [FromBody] ImageForUpdate imageForUpdate)
         {           
@@ -159,9 +162,9 @@ namespace ImageGallery.API.Controllers
                 return new UnprocessableEntityObjectResult(ModelState);
             }
 
-            var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
-            if (!_galleryRepository.IsImageOwner(id, ownerId))
-                return StatusCode(403);
+            //var ownerId = this.User.Claims.FirstOrDefault(x => x.Type == "sub").Value;
+            //if (!_galleryRepository.IsImageOwner(id, ownerId))
+            //    return StatusCode(403);
 
 
             var imageFromRepo = _galleryRepository.GetImage(id);
