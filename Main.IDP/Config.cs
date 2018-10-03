@@ -75,6 +75,18 @@ namespace Main.IDP
                      ClientName = "Image Gallary",
                      ClientId = "imagegallaryclient",
                      AllowedGrantTypes = new string[] { GrantType.Hybrid },
+
+                     //IdentityTokenLifetime = 300,
+                     //AuthorizationCodeLifetime = 300,
+                     //AccessTokenLifetime = 3600,
+
+                     //AbsoluteRefreshTokenLifetime
+                     //RefreshTokenExpiration = TokenExpiration.Sliding
+                     //SlidingRefreshTokenLifetime
+
+                     UpdateAccessTokenClaimsOnRefresh = true,
+                     AllowOfflineAccess = true,
+
                      RedirectUris = new List<string>{
                          "https://localhost:44398/signin-oidc"
                      },

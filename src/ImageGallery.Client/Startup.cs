@@ -83,7 +83,9 @@ namespace ImageGallery.Client
                 Authority = "https://localhost:44387/",
                 RequireHttpsMetadata = true,
                 ClientId = "imagegallaryclient",
-                Scope = { "openid", "profile", "address", "roles", "imagegalleryapi", "subscriptionlevel", "country" },
+                Scope = { "openid", "profile", "address", "roles", "imagegalleryapi",
+                    "subscriptionlevel", "country", "offline_access"
+                },
                 ResponseType = "code id_token",
                 //CallbackPath = new PathString("...")
                 SignInScheme = "Cookies",
