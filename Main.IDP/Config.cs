@@ -76,6 +76,8 @@ namespace Main.IDP
                      ClientId = "imagegallaryclient",
                      AllowedGrantTypes = new string[] { GrantType.Hybrid },
 
+                     AccessTokenType = AccessTokenType.Reference,
+
                      //IdentityTokenLifetime = 300,
                      //AuthorizationCodeLifetime = 300,
                      //AccessTokenLifetime = 3600,
@@ -112,7 +114,9 @@ namespace Main.IDP
 
         public static IEnumerable<ApiResource> GetApiResources() {
             return new List<ApiResource> {
-                new ApiResource("imagegalleryapi", "Image Gallery API", new List<string> { "role" })
+                new ApiResource("imagegalleryapi", "Image Gallery API", new List<string> { "role" }){
+                    ApiSecrets = { new Secret("apisecret".Sha256()) }
+                }
             };
         }
 
