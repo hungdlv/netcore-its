@@ -44,7 +44,7 @@ namespace Main.IDP
 
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
-                .AddTestUsers(Config.GetUsers())
+                .AddMarvinUserStore()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients());
